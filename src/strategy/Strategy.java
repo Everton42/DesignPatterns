@@ -1,3 +1,5 @@
+package strategy;
+
 import java.math.BigDecimal;
 
 interface Imposto {
@@ -22,6 +24,23 @@ class ICMS implements Imposto {
         return valor.multiply(PORCENTAGEM).add(VALOR_FIXO);
     }
 
+}
+
+class ICCC implements Imposto {
+
+    @Override
+    public BigDecimal calcular(BigDecimal valor) {
+
+        if (valor.doubleValue() < 1000) {
+            return valor.multiply(BigDecimal.valueOf(0.05));
+        }
+
+        if (valor.doubleValue() >= 1000 || valor.doubleValue() <= 3000) {
+            return valor.multiply(BigDecimal.valueOf(0.07));
+        }
+
+        return valor.multiply(BigDecimal.valueOf(0.08));
+    }
 }
 
 class Orcamento {
@@ -52,8 +71,10 @@ public class Strategy {
 
         BigDecimal icmsCalculado = new CalculadorDeImpostos().calcularImposto(ORCAMENTO, new ICMS());
         BigDecimal issCalculado = new CalculadorDeImpostos().calcularImposto(ORCAMENTO, new ISS());
+        BigDecimal icccCalculado = new CalculadorDeImpostos().calcularImposto(ORCAMENTO, new ICCC());
 
         System.out.println(icmsCalculado);
         System.out.println(issCalculado);
+        System.out.println(icccCalculado);
     }
 }
