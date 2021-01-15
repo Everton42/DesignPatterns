@@ -53,9 +53,6 @@ public class Program {
 		System.out.println("==> Playlist " + studyPlaylist.getName() + " <==");
 		System.out.println("  List of songs:");
 		studyPlaylist.play();
-
-		// Get the playlist name of studyPlaylist → "Study"
-		System.out.println("The Playlist's name is " + studyPlaylist.getName());
 	}
 }
 
@@ -88,15 +85,8 @@ class Playlist implements IComponent {
 
 	@Override
 	public void play() {
-		for (IComponent component : playlist) {
-			if (component.getClass().isAssignableFrom(Playlist.class)) {
-				Playlist playlistComponent = (Playlist) component;
-				playlistComponent.play();
-			} else {
-				Song song = (Song) component;
-				System.out.println("  " + song.getName() + " by " + song.getArtist());
-			}
-		}
+		for (IComponent component : playlist)
+			component.play();
 	}
 
 	@Override
